@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-$END$
+<!--В index.html-->
+<!--1 отримати масив об'єктів з endpoint`а https://jsonplaceholder.typicode.com/users-->
+<!--2 Вивести id,name всіх user в index.html. Окремий блок для кожного user.-->
+<!--3 Додати кожному блоку кнопку/посилання , при кліку на яку відбувається перехід на сторінку user-details.html, котра має-->
+<!--детальну інфорацію про об'єкт на який клікнули-->
+<div id="users"></div>
+
+<script>
+    fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(users => {
+            const usersDiv = document.getElementById('users');
+
+            users.forEach(user => {
+                const userDiv = document.createElement('div');
+                const link = document.createElement('a');
+                link.href = `user-details.html?id=${user.id}`;
+                link.textContent = `${user.id}: ${user.name}`;
+                userDiv.appendChild(link);
+                usersDiv.appendChild(userDiv);
+            });
+        })
+        .catch(error => console.error(error));
+</script>
 </body>
 </html>
